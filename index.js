@@ -17,10 +17,16 @@ const client = new MongoClient(uri, {
   serverApi: ServerApiVersion.v1,
 });
 
+// ?--------------------Api async Function start ---------------//
+
 async function run() {
   try {
     await client.connect();
     const serviceCollection = client.db("jerin-parlour").collection("services");
+    const bookingCollection = client.db("jerin-parlour").collection("bookings");
+    const userCollection = client.db("jerin-parlour").collection("users");
+    const reviewCollection = client.db("jerin-parlour").collection("reviews");
+
     app.get("/demo", async (req, res) => {
       const result = await serviceCollection.find().toArray();
       res.send(result);
@@ -30,6 +36,8 @@ async function run() {
   }
 }
 run().catch(console.dir);
+
+// ?--------------------common route---------------//
 
 app.get("/", (req, res) => {
   res.send("Jerin Parlour server in running");
